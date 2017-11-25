@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 
 import { AppComponent } from './app.component';
+import { MarkerService } from './services/marker.service';
 
 
 @NgModule({
@@ -18,7 +19,7 @@ import { AppComponent } from './app.component';
 		  apiKey: 'AIzaSyDT2NO8RgOBPpi3Hph-sjfyE1zyRPAoMnQ'
 		})    
   ],
-  providers: [],
+  providers: [MarkerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

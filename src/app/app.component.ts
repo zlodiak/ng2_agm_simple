@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 
+import { MarkerService } from './services/marker.service';
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,26 +19,11 @@ export class AppComponent {
   markerLng = '';
   markerDraggable = '';
 
-  markers: marker[] = [
-  	{
-  		name: 'company one',
-  		lat: 42.8,
-  		lng: -71.1,
-  		draggable: true
-  	},
-  	{
-  		name: 'company 2',
-  		lat: 42.1,
-  		lng: -72.1,
-  		draggable: true
-  	},
-  	{
-  		name: 'company 3',
-  		lat: 42.8,
-  		lng: -71.6,
-  		draggable: true
-  	}  	  	
-  ]
+  constructor(private _markerService: MarkerService) {
+  	this.markers = this._markerService.getMarkers();
+  }
+
+  markers: marker[] = [];
 
   mapClicked($event: any) {
   	console.log('map clicked');
@@ -48,6 +36,9 @@ export class AppComponent {
   	}
 
   	this.markers.push(newMarker);
+
+  	console.log(newMarker);
+  	this._markerService.addMarker(newMarker);
   };
 
   clickMarker(marker: marker, index: number) {
@@ -55,7 +46,7 @@ export class AppComponent {
   }
 
   markerDragEnd(marker: marker, $event: any) {
-  	console.log('markerDragEnd', marker, $event);
+  	console.log('markerDragEnd');
 
   	let updMarker = {
   		name: marker.name,
@@ -66,6 +57,8 @@ export class AppComponent {
 
   	let newLat = $event.coords.lat;
   	let newLng = $event.coords.lng;
+
+  	this._markerService.updateMarker(updMarker, newLat, newLng);
   };
 
   addMarker() {
@@ -87,8 +80,19 @@ export class AppComponent {
   	};
 
   	this.markers.push(newMarker);
+  	this._markerService.addMarker(newMarker);
+  };
 
-  	console.log(this.markers);
+  removeMarker(marker) {
+  	console.log('removeMarker');
+
+  	for(let i = 0; i < this.markers.length; i++) {
+  		if(marker.lat == this.markers[i].lat && marker.lng == this.markers[i].lng) {
+  			this.markers.splice(i, 1);
+  		}
+  	}  	
+
+  	this._markerService.removeMarker(marker);
   };
 
 }

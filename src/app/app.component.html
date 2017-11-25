@@ -29,7 +29,13 @@
                         [latitude]="m.lat" 
                         [longitude]="m.lng"
                         [markerDraggable]="m.draggable" 
-                        (dragEnd)="markerDragEnd(m, $event)"></agm-marker>
+                        (dragEnd)="markerDragEnd(m, $event)">
+              <agm-info-window>
+                <strong>{{ m.name }}</strong>
+                <br>
+                <a class="delete" (click)="removeMarker(m)">delete</a>
+              </agm-info-window>
+            </agm-marker>
           </agm-map>
         </div>
       </div>    
