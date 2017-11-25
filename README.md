@@ -1,3 +1,5 @@
+simple AGM modue example. create, delete, draggable markers
+
 # GmapDrag
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
